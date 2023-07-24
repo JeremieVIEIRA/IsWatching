@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,10 +8,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed = 6f;
     [SerializeField] float gravity = -13.0f;
 
+    [SerializeField] GameObject lampe;
+
     [SerializeField][Range(0.0f, 0.5f)] float moveSmothTime = 0.3f;
     [SerializeField][Range(0.0f, 0.5f)] float mouseSmothTime = 0.3f;
 
-
+    bool isSprinting = false;
+    bool isActive = true;
     float cameraPitch = 0.0f;
     float velocityY = 0.0f;
     CharacterController controller = null;
@@ -33,6 +37,8 @@ public class PlayerController : MonoBehaviour
     {
         UpdateMouse();
         UpdateMouvement();
+        UpdateLamp();
+        UpdateSprint();
     }
 
     void UpdateMouse()
@@ -66,9 +72,48 @@ public class PlayerController : MonoBehaviour
 
         velocityY += gravity * Time.deltaTime;
 
+        if (isSprinting == true)
+        {
+            speed = 64f;
+        }
+        else
+        {
+            speed = 6f;
+        }
+
         Vector3 velo = (transform.forward * currentDir.y + transform.right * currentDir.x) * speed + Vector3.up * velocityY;
+
+
         controller.Move(velo * Time.deltaTime);
 
     }
 
+    void UpdateLamp()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (isActive)
+            {
+                lampe.gameObject.SetActive(false);
+                isActive = false;
+            }
+            else
+            {
+                lampe.gameObject.SetActive(true);
+                isActive = true;
+            }
+        }
+    }
+
+    void UpdateSprint()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            isSprinting = true;
+        }
+        else
+        {
+            isSprinting = false;
+        }
+    }
 }
