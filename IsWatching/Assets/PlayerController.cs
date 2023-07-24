@@ -1,22 +1,27 @@
+using System;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Transform playerCamera = null;
+    [SerializeField] Camera CameraParametres;
     [SerializeField] float mouseSens = 3.5f;
-    [SerializeField] float speed = 6f;
+    [SerializeField] float speed = 10f;
     [SerializeField] float gravity = -13.0f;
+    [SerializeField] public Vector3 velo;
 
     [SerializeField] GameObject lampe;
 
     [SerializeField][Range(0.0f, 0.5f)] float moveSmothTime = 0.3f;
     [SerializeField][Range(0.0f, 0.5f)] float mouseSmothTime = 0.3f;
 
+    [SerializeField] public bool isMoving;
+
     bool isSprinting = false;
     bool isActive = true;
     float cameraPitch = 0.0f;
     float velocityY = 0.0f;
+   
     CharacterController controller = null;
     Vector2 currentDir = Vector2.zero;
     Vector2 currentDirVelo = Vector2.zero;
@@ -64,27 +69,46 @@ public class PlayerController : MonoBehaviour
 
         Vector2 targetDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         targetDir.Normalize();
-
+        if (targetDir.x == 0 && targetDir.y == 0)
+        {
+            isMoving = false;
+            speed = 0;
+        }
+        else
+        {
+            isMoving = true;
+            speed = 10;
+        }
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelo, moveSmothTime);
 
         if (controller.isGrounded)
             velocityY = 0.0f;
 
         velocityY += gravity * Time.deltaTime;
+        UpdateSprint();
 
-        if (isSprinting == true)
+        //Vector3 vitessePreChange = velo;
+
+        velo = (transform.forward * currentDir.y + transform.right * currentDir.x) * speed + Vector3.up * velocityY;
+
+/*        if (velo.x < vitessePreChange.x && Math.Abs(velo.x) < 0.5f)
         {
-            speed = 64f;
+            velo.x = 0;
+        }
+*/
+
+/*        if (Math.Abs(velo.x) > 0)
+        {
+            isMoving = true;
         }
         else
         {
-            speed = 6f;
+            if (velo.x == 0)
+            {
+                isMoving = false;
+            }
         }
-
-        Vector3 velo = (transform.forward * currentDir.y + transform.right * currentDir.x) * speed + Vector3.up * velocityY;
-
-
-        controller.Move(velo * Time.deltaTime);
+*/        controller.Move(velo * Time.deltaTime);
 
     }
 
@@ -107,13 +131,32 @@ public class PlayerController : MonoBehaviour
 
     void UpdateSprint()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             isSprinting = true;
+            speed = 15;
+            if (CameraParametres.fieldOfView < 70 && isMoving)
+            {
+                CameraParametres.fieldOfView += 0.5f;
+            }
+            else if (!isMoving)
+            {
+                isSprinting = false;
+                speed = 10;
+                if (CameraParametres.fieldOfView > 60)
+                {
+                    CameraParametres.fieldOfView -= 1;
+                }
+            }
         }
         else
         {
             isSprinting = false;
+            speed = 10;
+            if (CameraParametres.fieldOfView > 60)
+            {
+                CameraParametres.fieldOfView -= 1;
+            }
         }
     }
 }

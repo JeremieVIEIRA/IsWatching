@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 9045790264375146153}
+  CameraParametres: {fileID: 8453532882877668481}
   mouseSens: 3.5
   speed: 6
   gravity: -13
