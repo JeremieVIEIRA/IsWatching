@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
     private float fovTargetSprint = 70f;
     private float fovTargetNormal = 60f;
 
-    bool isSprinting = false;
+    [SerializeField] float Stamina = 100.0f;
+    float MaxStamina = 100.0f;
+
     bool isActive = true;
     float cameraPitch = 0.0f;
     float velocityY = 0.0f;
@@ -52,8 +54,23 @@ public class PlayerController : MonoBehaviour
         UpdateMouse();
         UpdateMouvement();
         UpdateLamp();
-        UpdateSprint();
-        headbobing.frequency = speed;
+        updateStamina();
+
+        if (Stamina < 0.0f)
+            Stamina = 0.0f;
+
+        if (Stamina > 10.0f)
+        {
+            UpdateSprint();
+            headbobing.frequency = speed;
+        }
+        else if (Stamina <= 0.0f)
+        {
+            speed = 10f;
+            headbobing.frequency = speed;
+            CameraParametres.fieldOfView = Mathf.Lerp(CameraParametres.fieldOfView, fovTargetNormal, 10 * Time.deltaTime);
+        }
+
 
     }
 
@@ -75,6 +92,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void DecreaseStamina()
+    {
+        if (Stamina != 0)
+            Stamina -= 30 * Time.deltaTime;
+    }
+
+    void IncreaseStamina()
+    {
+        Stamina += 30 * Time.deltaTime;
+    }
+
+
     void UpdateMouvement()
     {
 
@@ -90,7 +119,9 @@ public class PlayerController : MonoBehaviour
         }
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelo, moveSmothTime);
 
-        UpdateSprint();
+        if (Stamina > 8.0f)
+            UpdateSprint();
+
 
         if (controller.isGrounded)
             velocityY = 0.0f;
@@ -127,18 +158,19 @@ public class PlayerController : MonoBehaviour
     void UpdateSprint()
     {
 
-        if(Input.GetKeyDown(KeyCode.LeftShift)) 
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            speed = 15;
+            speed = 15f;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            speed = 10;
+            speed = 10f;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            
+
             if (CameraParametres.fieldOfView < fovTargetSprint)
             {
                 CameraParametres.fieldOfView = Mathf.Lerp(CameraParametres.fieldOfView, fovTargetSprint, 10 * Time.deltaTime);
@@ -146,11 +178,19 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            
             if (CameraParametres.fieldOfView > fovTargetNormal)
             {
                 CameraParametres.fieldOfView = Mathf.Lerp(CameraParametres.fieldOfView, fovTargetNormal, 10 * Time.deltaTime);
             }
         }
+    }
+
+
+    void updateStamina()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+            DecreaseStamina();
+        else if (Stamina <= MaxStamina)
+            IncreaseStamina();
     }
 }

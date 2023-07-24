@@ -5,7 +5,6 @@ using UnityEngine;
 public class HeadBobing : MonoBehaviour
 {
 
-    [SerializeField] private bool _enable = true;
 
     [SerializeField, Range(0, 0.1f)] public float amplitude = 0.0144f; 
     [SerializeField, Range(0, 30)] public float frequency = 10f;
@@ -67,7 +66,6 @@ public class HeadBobing : MonoBehaviour
     void Update()
     {
 
-        if(!enabled) return;
         CheckMotion();
         ResetPosition();
         _camera.LookAt(FocusTarget());
