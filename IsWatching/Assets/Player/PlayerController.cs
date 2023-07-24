@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Vector3 velo;
 
     [SerializeField] GameObject lampe;
+    HeadBobing headbobing;
 
     [SerializeField][Range(0.0f, 0.5f)] float moveSmothTime = 0.3f;
     [SerializeField][Range(0.0f, 0.5f)] float mouseSmothTime = 0.3f;
@@ -39,8 +40,16 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        headbobing = GetComponent<HeadBobing>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+    }
+
+    private void ResetBobing()
+    {
+        headbobing.amplitude = 0.0144f;
+        headbobing.frequency = 10f;
     }
 
     // Update is called once per frame
@@ -125,10 +134,12 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftShift)) 
         {
             speed = 15;
+            headbobing.frequency = 16f;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             speed = 10;
+            ResetBobing();
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
