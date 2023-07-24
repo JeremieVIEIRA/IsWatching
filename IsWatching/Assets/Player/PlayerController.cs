@@ -46,12 +46,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void ResetBobing()
-    {
-        headbobing.amplitude = 0.0144f;
-        headbobing.frequency = 10f;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -59,6 +53,8 @@ public class PlayerController : MonoBehaviour
         UpdateMouvement();
         UpdateLamp();
         UpdateSprint();
+        headbobing.frequency = speed;
+
     }
 
     void UpdateMouse()
@@ -134,12 +130,10 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftShift)) 
         {
             speed = 15;
-            headbobing.frequency = 16f;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             speed = 10;
-            ResetBobing();
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
