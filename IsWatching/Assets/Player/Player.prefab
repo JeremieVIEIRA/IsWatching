@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7498860821071131309}
   - component: {fileID: 2645445900959273127}
   - component: {fileID: 9118613660489262800}
+  - component: {fileID: 7325879894739822146}
+  - component: {fileID: 8847667025974847630}
   - component: {fileID: 8657544999578825050}
   - component: {fileID: 5278317841296106172}
-  - component: {fileID: 5434141186250596746}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -75,18 +76,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4afff69dce3c8d14ca9ae9e42368f88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioScript: {fileID: 5278317841296106172}
   playerCamera: {fileID: 9045790264375146153}
   CameraParametres: {fileID: 8453532882877668481}
   mouseSens: 3.5
   speed: 6
   gravity: -13
   velo: {x: 0, y: 0, z: 0}
-  lampe: {fileID: 7647750042914048379}
   moveSmothTime: 0.3
   mouseSmothTime: 0.3
   isMoving: 0
   Stamina: 100
+<<<<<<< HEAD
+=======
+--- !u!114 &7325879894739822146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5295018976814096485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 134dc2dcb35701843a969db4333425dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSmoothTime: 0.03
+  playerCamera: {fileID: 9045790264375146153}
+  mouseSensitivity: 3.5
+--- !u!114 &8847667025974847630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5295018976814096485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd8707eb89687d43abe44d0379bc772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioScript: {fileID: 5278317841296106172}
+  lampe: {fileID: 7647750042914048379}
+>>>>>>> a27434a5a64011c4a844d1e458e231fb36f64c51
 --- !u!82 &8657544999578825050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -198,6 +229,7 @@ MonoBehaviour:
   src: {fileID: 8657544999578825050}
   FL_On: {fileID: 8300000, guid: 4f7ec5a2bae88ca45b351572b46c0938, type: 3}
   FL_Off: {fileID: 8300000, guid: f7e95b8fb455a504d9db40203b8dd1dc, type: 3}
+<<<<<<< HEAD
 --- !u!114 &5434141186250596746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +246,8 @@ MonoBehaviour:
   frequency: 10
   _camera: {fileID: 9045790264375146153}
   cameraHolder: {fileID: 4330717976205094642}
+=======
+>>>>>>> a27434a5a64011c4a844d1e458e231fb36f64c51
 --- !u!1 &7647750042914048379
 GameObject:
   m_ObjectHideFlags: 0
