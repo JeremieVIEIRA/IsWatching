@@ -86,6 +86,7 @@ MonoBehaviour:
   moveSmothTime: 0.3
   mouseSmothTime: 0.3
   isMoving: 0
+  Stamina: 100
 --- !u!82 &8657544999578825050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -209,7 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c48140bcb8ce4b44aa0edc4189f9aa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enable: 1
   amplitude: 0.0144
   frequency: 10
   _camera: {fileID: 9045790264375146153}
